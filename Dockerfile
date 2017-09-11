@@ -1,4 +1,4 @@
-FROM qnib/alplain-init AS build
+FROM qnib/alplain-init:3.6 AS build
 
 ARG RDK_VER=0.9.5
 RUN apk --no-cache add g++ python ca-certificates yajl openssl make rsync
@@ -17,7 +17,8 @@ RUN mkdir -p /usr/local/kafkacat \
  && make \
  && make install
 
-FROM qnib/alplain-init
+FROM qnib/alplain-init:3.6
+RUN apk --no-cache add ca-certificates yajl openssl
 COPY --from=build /usr/local/librdkafka/lib/* /usr/local/lib/
 COPY --from=build /usr/local/librdkafka/include/* /usr/local/include/
 COPY --from=build /usr/local/kafkacat/bin/* /usr/local/bin/
