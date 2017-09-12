@@ -18,7 +18,7 @@ RUN mkdir -p /usr/local/kafkacat \
  && make install
 
 FROM qnib/alplain-init:3.6
-RUN apk --no-cache add ca-certificates yajl openssl
+RUN apk --no-cache add ca-certificates yajl openssl yajl-dev
 COPY --from=build /usr/local/librdkafka/lib/* /usr/local/lib/
 COPY --from=build /usr/local/librdkafka/include/* /usr/local/include/
 COPY --from=build /usr/local/kafkacat/bin/* /usr/local/bin/
